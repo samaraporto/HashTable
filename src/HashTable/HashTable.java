@@ -6,9 +6,10 @@ package HashTable;
 public class HashTable {
 	Node[] arr;
 	int margem;
-	int media;
+	int a;
 	int m;
 	int tableElementsLen = 0;
+	int n;
 	
 	public HashTable(int n, int margem, int a) {
 		int m = n/a;
@@ -19,8 +20,9 @@ public class HashTable {
 			m = primoMaisProximo(m);
 			arr = new Node[m];
 		}
+		this.n=n;
 		this.m = m;
-		this.media = a;
+		this.a = a;
 		this.margem = margem;
 	}
 	public void insere(String str) {
@@ -29,15 +31,29 @@ public class HashTable {
 		if(arr[i]==null) {
 			arr[i] = no;
 		}else {
-			for(Node temp = arr[i];temp != null; temp = temp.getProx()) {
-				if(temp.getProx()==null) {
-					temp.setProx(no);
-					break;
-				}
-			}
-			
+			Node temp = arr[i];
+            while (temp.getProx() != null) {
+                temp = temp.getProx();
+            }
+            temp.setProx(no);
 		}
 		tableElementsLen++;
+		//media de elementos por posição da tabela
+		double mediaDaTabela = (double) tableElementsLen/m;
+		if(mediaDaTabela > a * (1 + (double) margem / 100)) {
+			HashTable novaTabela = new HashTable((int) (n * 1.5), margem, a);
+			for(int x = 0; x<m; x++) {
+				if(arr[x]!=null) {
+					for(Node currentNode = arr[x]; currentNode!=null;currentNode=currentNode.getProx()) {
+						novaTabela.insere(currentNode.getInfo());
+						System.out.println("valor "+currentNode.getInfo()+" adicionado na nova tabela");
+					}
+				}
+			}
+			this.arr = novaTabela.arr;
+			this.m=novaTabela.m;
+		}
+		
 	}
 	
 	public boolean busca() {
@@ -53,7 +69,8 @@ public class HashTable {
 		int sum = 0;
 		int len = str.length();
 		for(int i = 0; i < len; i++) {
-			sum += (int) str.charAt(i);//ao fazer o casting de uma letra pra inteiro resulta em seu equivalente na asc 
+			sum += (int) str.charAt(i) * i+1;//ao fazer o casting de uma letra pra inteiro resulta em seu equivalente na asc
+			//i+1 = um fator pra ajudar na diminuicao de colisoes
 		}
 		return sum % m;
 	}
@@ -78,12 +95,12 @@ public class HashTable {
     }
 	
 	public static void main(String[] args) {
-		HashTable table = new HashTable(9,30,3);
-		table.insere("samara");
-		table.insere("wanesa");
-		table.insere("emmmanuel");
-		table.insere("emmanuel");
-		table.insere("katia");
+		HashTable table = new HashTable(3,30,1);
+		table.insere("anna");
+		table.insere("valentina");
+		table.insere("taylor");
+		table.insere("steven");
+		table.insere("kate");
 		for(int i= 0;i<table.arr.length; i++) {
 			System.out.println(table.arr[i]);
 		}
