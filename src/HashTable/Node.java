@@ -3,7 +3,7 @@ package HashTable;
 public class Node {
 	private String info;
 	private Node prox;
-	
+
 	public Node(String info) {this.setInfo(info);}
 	public Node(String info, Node prox) {
 		this.setInfo(info);

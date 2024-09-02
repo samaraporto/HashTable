@@ -56,9 +56,18 @@ public class HashTable {
 		
 	}
 	
-	public boolean busca() {
-		return false;
+	public boolean busca(String str) {
+		int i = hash(str);  //calcula o índice do elemento
+	    Node currentNode = arr[i];  // inicia a busca no início da lista 
+	    while (currentNode != null) {  // percorre a lista
+	        if (currentNode.getInfo().equals(str)) {  //compara o valor armazenado com o valor buscado
+	            return true;  // quando encontra retorna true
+	        }
+	        currentNode = currentNode.getProx();  //vai pro prox nó
+	    }
+	    return false;  //se nn acha, retorna false
 	}
+
 	
 	public void remove(String str) {
 		
@@ -96,13 +105,29 @@ public class HashTable {
 	
 	public static void main(String[] args) {
 		HashTable table = new HashTable(3,30,1);
+
 		table.insere("anna");
 		table.insere("valentina");
 		table.insere("taylor");
 		table.insere("steven");
 		table.insere("kate");
-		for(int i= 0;i<table.arr.length; i++) {
-			System.out.println(table.arr[i]);
+		
+		System.out.println("elementos inseridos");
+		
+		for(int i = 0; i < table.arr.length; i++) {
+		    if(table.arr[i] != null) {
+		        Node currentNode = table.arr[i];
+		        while (currentNode != null) {
+		            System.out.println(currentNode.getInfo());
+		            currentNode = currentNode.getProx();
+		        }
+		    }
 		}
+		
+		
+		
+		System.out.println("steven está presente = " + table.busca("steven"));
+		
 	}
+
 }
