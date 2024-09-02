@@ -70,7 +70,23 @@ public class HashTable {
 
 	
 	public void remove(String str) {
-		
+		int i = hash(str);
+		Node noAtual = arr[i];
+		Node noAnterior = null;
+		while (noAtual != null) {
+			if(noAtual.getInfo().equals(str)){
+				if(noAnterior == null) {
+					arr[i] = noAtual.getProx();
+				} else {
+					noAnterior.setProx(noAtual.getProx());
+				}
+				n--;
+				return;
+			}
+			noAnterior = noAtual;
+			noAtual = noAtual.getProx();
+		}
+
 	}
 	
 	private int hash(String str) {
@@ -127,6 +143,47 @@ public class HashTable {
 		
 		
 		System.out.println("steven está presente = " + table.busca("steven"));
+		
+		
+		System.out.println(" teste exclui primeiro elemento");
+		table.remove("anna");
+		for(int i = 0; i < table.arr.length; i++) {
+		    if(table.arr[i] != null) {
+		        Node currentNode = table.arr[i];
+		        while (currentNode != null) {
+		            System.out.println(currentNode.getInfo());
+		            currentNode = currentNode.getProx();
+		        }
+		    }
+		}
+		
+		System.out.println(" teste exclui  elemento do meio ");
+		table.remove("taylor");
+		for(int i = 0; i < table.arr.length; i++) {
+		    if(table.arr[i] != null) {
+		        Node currentNode = table.arr[i];
+		        while (currentNode != null) {
+		            System.out.println(currentNode.getInfo());
+		            currentNode = currentNode.getProx();
+		        }
+		    }
+		}
+		
+		
+		System.out.println(" teste exclui  elemento do fim ");
+		table.remove("kate");
+		for(int i = 0; i < table.arr.length; i++) {
+		    if(table.arr[i] != null) {
+		        Node currentNode = table.arr[i];
+		        while (currentNode != null) {
+		            System.out.println(currentNode.getInfo());
+		            currentNode = currentNode.getProx();
+		        }
+		    }
+		}
+		
+		
+		
 		
 	}
 
