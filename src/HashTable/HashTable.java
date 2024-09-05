@@ -90,14 +90,14 @@ public class HashTable {
 	}
 	
 	private int hash(String str) {
-		str = str.toUpperCase();//letras maiusculas tem numeros asc menores
-		int sum = 0;
-		int len = str.length();
-		for(int i = 0; i < len; i++) {
-			sum += (int) str.charAt(i) * i+1;//ao fazer o casting de uma letra pra inteiro resulta em seu equivalente na asc
-			//i+1 = um fator pra ajudar na diminuicao de colisoes
-		}
-		return sum % m;
+	    str = str.toUpperCase();
+	    long sum = 0;
+	    int len = str.length();
+	    for (int i = 0; i < len; i++) {
+	        sum += 33 * sum + str.charAt(i);
+	    }
+	    sum = Math.abs(sum % m); 
+	    return (int) sum; 
 	}
 	
 	public static boolean isPrimo(int num) {
@@ -118,73 +118,4 @@ public class HashTable {
         }
         return maiorPrimo;
     }
-	
-	public static void main(String[] args) {
-		HashTable table = new HashTable(3,30,1);
-
-		table.insere("anna");
-		table.insere("valentina");
-		table.insere("taylor");
-		table.insere("steven");
-		table.insere("kate");
-		
-		System.out.println("elementos inseridos");
-		
-		for(int i = 0; i < table.arr.length; i++) {
-		    if(table.arr[i] != null) {
-		        Node currentNode = table.arr[i];
-		        while (currentNode != null) {
-		            System.out.println(currentNode.getInfo());
-		            currentNode = currentNode.getProx();
-		        }
-		    }
-		}
-		
-		
-		
-		System.out.println("steven está presente = " + table.busca("steven"));
-		
-		
-		System.out.println(" teste exclui primeiro elemento");
-		table.remove("anna");
-		for(int i = 0; i < table.arr.length; i++) {
-		    if(table.arr[i] != null) {
-		        Node currentNode = table.arr[i];
-		        while (currentNode != null) {
-		            System.out.println(currentNode.getInfo());
-		            currentNode = currentNode.getProx();
-		        }
-		    }
-		}
-		
-		System.out.println(" teste exclui  elemento do meio ");
-		table.remove("taylor");
-		for(int i = 0; i < table.arr.length; i++) {
-		    if(table.arr[i] != null) {
-		        Node currentNode = table.arr[i];
-		        while (currentNode != null) {
-		            System.out.println(currentNode.getInfo());
-		            currentNode = currentNode.getProx();
-		        }
-		    }
-		}
-		
-		
-		System.out.println(" teste exclui  elemento do fim ");
-		table.remove("kate");
-		for(int i = 0; i < table.arr.length; i++) {
-		    if(table.arr[i] != null) {
-		        Node currentNode = table.arr[i];
-		        while (currentNode != null) {
-		            System.out.println(currentNode.getInfo());
-		            currentNode = currentNode.getProx();
-		        }
-		    }
-		}
-		
-		
-		
-		
-	}
-
 }
