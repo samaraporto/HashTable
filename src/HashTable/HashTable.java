@@ -80,7 +80,7 @@ public class HashTable {
 				} else {
 					noAnterior.setProx(noAtual.getProx());
 				}
-				n--;
+				tableElementsLen--;
 				return;
 			}
 			noAnterior = noAtual;
